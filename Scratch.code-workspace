@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "./Netflix",
+			"name": "Netflix"
+		},{
+			"path": "./Portfolio",
+			"name": "Portfolio"
+		},
+		{
+			"path": "./",
+			"name": "Home"
+		}
+	],
+	"settings": {}
+}
