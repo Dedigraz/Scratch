@@ -58,3 +58,7 @@
 .mid-nav .nav-links.active{
   color:#fff;
 }
+
+.play-btn{
+  letter-spacing: 0.2rem;
+}
