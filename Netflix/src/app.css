@@ -1,7 +1,7 @@
 #root {
-  max-width: 1280px;
+  /* max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem; */
   text-align: center;
 }
 
@@ -39,4 +39,22 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.layout{
+  display:flex;
+  flex-direction: column;
+}
+
+.netflix-logo path{
+  fill: #fff;
+  /* fill: var(--pres-color); */
+}
+
+.mid-nav .nav-links{
+  color:#d8d5d5
+}
+
+.mid-nav .nav-links.active{
+  color:#fff;
 }
