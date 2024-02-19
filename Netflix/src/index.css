@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 *{
-  outline: red 1px solid;
+  /* outline: red 1px solid; */
 }
 
 :root {
-  font-family: "Dongle",Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   /* letter-spacing: ; */
