@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem; */
   text-align: center;
+  /* overflow-x: hidden; */
 }
 
 .logo {
@@ -84,4 +85,21 @@
   aspect-ratio: 6/16;
   image-resolution: from-image;
   image-rendering: optimizeQuality;
+}
+
+main{
+  scroll-snap-type: mandatory;
+  scroll-snap-points-y:100vh;
+  scroll-snap-type: y mandatory;
+}
+
+main > div{
+  scroll-snap-align: center;
+}
+.position{
+  transform: rotate(-90deg);
+  position: absolute;
+  bottom:3rem;
+  right:0px;
+  /* left:0rem; */
 }

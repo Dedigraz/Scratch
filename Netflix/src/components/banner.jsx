@@ -2,20 +2,39 @@ import {
   tmdbImageURL,
   tmdbBackdropSizes,
   getPopularMovies,
+  getCredits,
+  convertGenre
 } from "../movieWrapper";
 import { useEffect, useState} from "react";
 export const Banner = () => {
   const [movies, setMovies] = useState([]);
   const [currMov, setCurrentMovie] = useState(0);
   const [backdrop, setBackdrop] = useState("");
+  const [director, setDirector] = useState("");
+  const [crew, setCrew] = useState([]);
   useEffect(() => {
     async function gd() {
       getPopularMovies().then((movies) => {
-        setMovies(movies.slice(0, 2));
+        setMovies(movies.slice(0, 5));
       });
     }
     gd();
   }, []); //
+
+  useEffect(() => {
+    getCredits(movies[currMov]?.id).then((credits) => {
+      setCrew([]);
+      credits?.cast?.map((person) => {
+        setCrew((cast) => [...cast, person.name]) 
+      })
+
+      credits?.crew?.map((person) => {
+        if (person.job === "Director") {
+          setDirector(person.name);
+        }
+      });
+    });
+  }, [movies, currMov]);
 
   useEffect(() => {
     const width = tmdbBackdropSizes[tmdbBackdropSizes.length - 2];
@@ -34,23 +53,36 @@ export const Banner = () => {
   }, [movies, currMov]);
 
   return (
-    <>
-      <div className="backdrop -z-10 w-screen opacity-60 h-[80vh] absolute top-0 left-0">
+    <div className="w-screen">
+      <div className="backdrop -z-10 w-full opacity-60 h-[80vh]  absolute top-0 left-0 snap-start">
         <img
           src={backdrop}
           alt="Movie Backdrop Image"
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="w-full h-[77vh] relative">
+      <div className="  h-[77vh] mx-12 relative snap-start">
         <img
           src={backdrop}
           alt="Movie Backdrop Image"
           className="w-full h-full object-cover -z-[5] absolute top-0 left-0"
+          loading="eager"
+          autoSave="true"
         />
+        <div className="flex flex-row w-24 absolute top-0 mt-4 left-[50%]">
+          {[1, 2, 3, 4, 5].map((i) => {
+            return (
+              <div
+                key={i}
+                className={`w-2 h-2 rounded-full bg-white mx-1 ${i === currMov + 1 ? "bg-opacity-100" : "bg-opacity-50"
+                  }`}
+              ></div>
+            );
+          })}
+        </div>
         <div className="container w-full h-full z-50  flex flex-row">
 
-            <div className="w-2/3 ml-8 flex flex-col justify-center items-start h-full text-left border-l border-gray-400 border-opacity-30 text-white">
+            <div className="w-[70%] ml-8 flex flex-col justify-center items-start h-full text-left border-l border-gray-400 border-opacity-30 text-white">
               <h1 className="text-5xl font-bold uppercase">
                 {movies[currMov]?.title}
               </h1>
@@ -87,11 +119,19 @@ export const Banner = () => {
             </div>
         
 
-          <div className="w-[30%] h-full border-l border-gray-400 border-opacity-30">
-hr
+          <div className="w-[27%] border-l border-r border-gray-400 border-opacity-30 flex flex-col gap-12 justify-end mb-12">
+            <div className="flex flex-row justify-between w-full">
+              <span className="text-left">Director <br />{director }</span>
+              <span className="text-right">Stars <br />{crew.slice(0, 3).map(
+                (person) => { return <span key={person}>{person}<br /></span> }
+              )}</span>
+            </div>
+
+            <span className="text-left flex flex-row gap-4 flex-wrap">{movies[currMov]?.genre_ids?.map((genre) => { return <span key={genre}>{convertGenre(genre)}  </span> })}</span>
           </div>
+          <div className="w-[3%]"><span className="position">{currMov+1}/5</span></div>
         </div>
       </div>
-    </>
+    </div>
   );
 };

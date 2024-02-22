@@ -120,6 +120,21 @@ export async function getPopularMovies() {
         .catch(err => console.error('error:' + err));
 }
 
+export async function getCredits(movieId) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`;
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_AUTH_TOKEN}`,
+    }
+  }
+
+  return fetch(url, options)
+    .then(res => res.json())
+    .catch(err => console.error('error:' + err));
+}
+
 export async function getAiringShows() {
     const url = 'https://api.themoviedb.org/3/discover/tv?air_date.gte=2024-01-01&include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=vote_count.desc&vote_average.gte=8&vote_average.lte=10&with_original_language=en';
     const options = {
