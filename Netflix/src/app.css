@@ -72,19 +72,20 @@
 }
 
 .poster-cont{
-  height: 60%;
+  /* height: 60%; */
   width: 100%;
 }
 
-.poster{
+.poster-cont img{
   width: 100%;
   height: 100%;
   /* clip-path: inset(0 0 28% 0 round 0px); */
   object-fit: cover;
+  /* zoom: ; */
   
-  aspect-ratio: 6/16;
-  image-resolution: from-image;
-  image-rendering: optimizeQuality;
+  aspect-ratio: 16/9;
+  /* image-resolution: from-image;
+  image-rendering: optimizeQuality; */
 }
 
 main{
@@ -102,4 +103,8 @@ main > div{
   bottom:3rem;
   right:0px;
   /* left:0rem; */
+}
+
+.trailer-text{
+  letter-spacing: 0.2rem;
 }

@@ -16,7 +16,7 @@ export const Category = ({ shows, closeBtn, group }) => {
                 
                 setLogos((logos) => [...logos, { id: show.id, path: (tmdbImageURL + tmdbLogoSizes[1] + l[0].file_path) }]);
             });
-            setBackdrops((backdrops) => [...backdrops, {id:show.id,path: (tmdbImageURL + tmdbBackdropSizes[tmdbBackdropSizes.length - 2] + show.backdrop_path)}]);
+            setBackdrops((backdrops) => [...backdrops, {id:show.id,path: (tmdbImageURL + tmdbBackdropSizes[tmdbBackdropSizes.length - 3] + show.backdrop_path)}]);
         });
     }, [shows,setLogos,setBackdrops]);
 
@@ -25,21 +25,21 @@ export const Category = ({ shows, closeBtn, group }) => {
       <button className="w-fit my-0" onClick={() => closeBtn(false)}>
         <span className="material-symbols-outlined">arrow_back</span>
       </button>
-      <div className="grid grid-cols-4 gap-y-8 gap-x-2  h-[80vh] overflow-x-auto grid-flow-row">
-        {shows.map((show,index) => {
+      <div className="grid grid-cols-4 gap-y-8 gap-x-2  max-h-[80vh] overflow-x-auto grid-flow-row">
+        {shows.map((show) => {
 
           return (
-            <div key={index} className="h-max">
+            <div key={show.id} className="h-max">
               <div className="relative">
                   <img
                     className="h-full object-cover"
                     src={backdrops.find((b) => b.id === show.id)?.path}
-                    alt="Show Poster"
+                    alt="BackDrop"
                   />
               <img
-                className="absolute bottom-4 left-2"
+                className="absolute bottom-4 left-2 max-w-[50%] max-h-[18%] filter invert-0 brightness-150  "
                 src={logos.find((l) => l.id === show.id)?.path}
-                alt="Show Logo"
+                alt="Logo"
               />
               </div>
               {group === "ContinueWatching" ? (

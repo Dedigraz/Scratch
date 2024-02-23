@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import {
   tmdbImageURL,
   tmdbPosterSizes,
@@ -16,6 +16,26 @@ export const Categories = () => {
   const [inCategory, setInCategory] = useState(false);
   const [shows, setShows] = useState([]);
   const [group, setGroup] = useState("");
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const [intersectionRatio, setIntersectionRatio] = useState(0);
+  const ref = useRef(null);
+  
+    useEffect(() => {
+      const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]
+  
+      };
+      const observer = new IntersectionObserver(([entry]) => {
+        setIsIntersecting(entry.isIntersecting);
+        setIntersectionRatio(entry.intersectionRatio);
+      },options);
+      console.log(isIntersecting);
+      observer.observe(ref.current);
+      return () => observer.disconnect();
+    }, []);
+
   const ContinueWatching = useMemo(() => {
     let movie = continueWatching.items[0];
     return (
@@ -32,6 +52,7 @@ export const Categories = () => {
       </div>
     );
   }, []);
+
 
   const MyList = useMemo(() => {
     let movie = myList.items[0];
@@ -89,11 +110,12 @@ export const Categories = () => {
     }
   }
   return (
-    <div
+    <section
       id="categories"
-      className="w-full max-h-screen h-screen grid grid-cols-1  grid-rows-1 grid-flow-row text-lg snap-start gap-12 items-end px-12 "
+      className="w-full max-h-screen h-[92vh] flex flex-col  gap-6  items-stretch justify-start pt-12 text-lg snap-start place-content-start px-12 "
+      
     >
-      <div className="h-12 grid grid-cols-3 grid-rows-1 gap-32 items-start justify-items-stretch">
+      <div className="h-12 grid grid-cols-3 grid-rows-1 gap-x-56 items-start justify-items-stretch">
         <div className="flex justify-between border-b border-gray-300 uppercase pb-2">
           <span>Continue Watching</span> {continueWatching.items.length}
         </div>
@@ -106,7 +128,7 @@ export const Categories = () => {
       </div>
       {inCategory ? <Category shows={shows} closeBtn={setInCategory } group={group} />
         :
-      <div className="grid grid-cols-3 grid-rows-1  gap-32 ">
+      <div ref={ref} className="grid grid-cols-3 grid-rows-1 opacity-30 gap-x-56 poster-cont" style={{opacity:Math.max(0.35,intersectionRatio)}}  >
         <div>
         {ContinueWatching}
           <button className=" w-full bg-transparent mt-16 border-[0.5px] border-gray-500 hover:bg-white hover:text-black text-sm rounded-none uppercase  " onClick={() =>showCategory("ContinueWatching")}>
@@ -127,6 +149,6 @@ export const Categories = () => {
         </div>
       </div>
 }
-    </div>
+    </section>
   );
 };
