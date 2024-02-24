@@ -1,5 +1,5 @@
 import Avatar from './assets/avatar.jpg';
-import { useRef } from "react";
+import { useEffect, useRef,useState } from "react";
 import useScrollSnap from "react-use-scroll-snap";
 import {  useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -7,7 +7,40 @@ import searchSvg from './assets/search.svg';
 import ScrollTrigger from "gsap/ScrollTrigger";
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
 
+import { getPopularMovies } from './movieWrapper';
+
 export const Layout = ({ children }) => {
+    const [preload, setPreload] = useState(<></>);
+    
+    useEffect(() => {
+        function preloader() {
+            if (document.getElementById) {
+                getPopularMovies().then((movies) => {
+                    movies.map((movie) => {
+                        document.getElementById(movie?.id).style.background = `url(https://image.tmdb.org/t/p/w1280${movie?.backdrop_path}) no-repeat -9999px -9999px`;
+                        document.getElementById(movie?.id+"-banner").style.background = `url(https://image.tmdb.org/t/p/w1280${movie?.backdrop_path}) no-repeat -9999px -9999px`;
+                    }
+                    );
+                }
+                );
+            }
+        }
+        function addLoadEvent(func) {
+            var oldonload = window.onload;
+            if (typeof window.onload != 'function') {
+                window.onload = func;
+            } else {
+                window.onload = function() {
+                    if (oldonload) {
+                        oldonload();
+                    }
+                    func();
+                }
+            }
+        }
+        addLoadEvent(preloader);
+    }
+    , []);
     const scrollRef = useRef(null);
     // useScrollSnap({ ref: scrollRef, duration: 50, delay: 20 });
     // useGSAP(() => {

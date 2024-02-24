@@ -62,7 +62,7 @@ export const Banner = () => {
 
         <>
           <img className="object-cover h-full w-full hover:cursor-pointer" src={`https://i.ytimg.com/vi_webp/${link}/0.webp`} onClick={(e) =>{e.preventDefault();
-      window.location.href=`https://www.youtube.com/watch?v=${link}`}}/>
+      window.location.href=`https://www.youtube.com/watch?v=${link}`}} loading="lazy" />
           <a className="absolute top-1/2 left-[65%] w-full h-full" href={`https://www.youtube.com/watch?v=${link}`} > <span className="text-lg uppercase text-white  p-2 border-b border-white trailer-text">Watch Trailer</span> </a>
         </>
 
@@ -77,6 +77,7 @@ export const Banner = () => {
   const cycleMovies = useCallback(() => {
     setDirector("");
     setCrew([]);
+    setTrailer(<></>);
     if (currMov + 1 >= movies.length) {
       setCurrentMovie(0);
       return;
@@ -91,11 +92,11 @@ export const Banner = () => {
       });
     }
     gd();
-    setTimer(Date.now() + 3_000);
+    setTimer(Date.now());
   }, []); //
 
   useEffect(() => {
-    if (timer >= 5) {
+    if (timer >= 10) {
       setTimer(0);
       cycleMovies();
     }
@@ -133,21 +134,11 @@ export const Banner = () => {
   return (
     <section className="max-w-screen w-screen block">
       
-        <div ref={ref} className="backdrop -z-10 w-full opacity-60 h-screen  absolute top-0 left-0 snap-start" style={{opacity: intersectionRatio < 0.7 ? 0:1}}>
-        <img
-          src={backdrop}
-          alt="Movie Backdrop Image"
-          className="w-full h-full object-cover"
-        />
+      <div id={`${movies[currMov]?.id}-banner`} ref={ref} className="backdrop -z-10 w-full opacity-60 h-screen  absolute top-0 left-0 snap-start" style={{ opacity: intersectionRatio < 0.7 ? 0 : 1, background: "no-repeat center/100% url(" + backdrop + ")" }}>
+
         </div>
-      <div className="  h-[77vh] mx-12 relative w-[95%]" style={{opacity: intersectionRatio < 0.7 ? 0:1}}>
-        <img
-          src={backdrop}
-          alt="Movie Backdrop Image"
-          className="w-full h-full object-cover -z-[5] absolute top-0 left-0"
-          loading="eager"
-          autoSave="true"
-        />
+      <div id={movies[currMov]?.id} className=" banner  h-[77vh] mx-12 relative w-[95%] " style={{opacity: intersectionRatio < 0.7 ? 0:1 , background:"linear-gradient( to bottom,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.6)), no-repeat center/100% url(" + backdrop + ")"}}>
+
         <div className="flex flex-row w-24 absolute top-0 mt-4 left-[50%]">
           {[1, 2, 3, 4, 5].map((i) => {
             return (
@@ -163,11 +154,11 @@ export const Banner = () => {
         <div className="container w-full h-full z-50  flex flex-row">
           <div className="w-[70%] pl-8  h-full text-left  text-white">
             <div className="border-l border-gray-400  border-opacity-30 h-full flex flex-col justify-end items-start pb-16">
-              <h1 className="text-5xl font-bold uppercase">
+              <h1 className="text-5xl font-bold uppercase ">
                 {movies[currMov]?.title}
               </h1>
               <br />
-              <p className="text-sm w-7/12">{movies[currMov]?.overview}</p>
+              <p className="text-sm w-7/12 ">{movies[currMov]?.overview}</p>
               <br />
               <div className="flex flex-row gap-4">
                 <button className="btn w-72 rounded-none text-sm bg-white text-black play-btn hover:bg-black hover:text-white hover:border-black">
