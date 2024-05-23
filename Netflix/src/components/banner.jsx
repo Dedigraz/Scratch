@@ -17,6 +17,8 @@ export const Banner = () => {
   const [crew, setCrew] = useState([]);
   const [timer, setTimer] = useState(0);
   const [trailer, setTrailer] = useState(<></>);
+  const [bannerClass, setBannerClass] = useState("enter-banner");
+  const [backdropClass, setBackdropClass] = useState("enter-backdrop");
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [intersectionRatio, setIntersectionRatio] = useState(1);
   const ref = useRef(null);
@@ -97,16 +99,25 @@ export const Banner = () => {
 
   useEffect(() => {
     if (timer >= 10) {
-      setTimer(0);
+      setTimer(0); // TODO move to after setTimeout call
+      setBannerClass("exit-banner");
+      setBackdropClass("exit-backdrop");
+    setTimeout(() => {
       cycleMovies();
+      setBannerClass("enter-banner");
+      setBackdropClass("enter-backdrop");
+    }, 3_000);
     }
+    // wait for half a second
+
   }, [timer, cycleMovies]);
 
   useEffect(() => {
     if (Date.now >= timer) {
-      setTimer(Date.now() + 3_000);
+      setTimer(Date.now() + 10_000);
       cycleMovies();
     }
+    setBannerClass("enter-banner");
   }, []);
 
 
@@ -127,17 +138,20 @@ export const Banner = () => {
   }, [movies, currMov]);
 
   useEffect(() => {
-    const width = tmdbBackdropSizes[tmdbBackdropSizes.length - 2];
+    const width = tmdbBackdropSizes[tmdbBackdropSizes.length - 1];
     setBackdrop(tmdbImageURL + width + movies[currMov]?.backdrop_path);
   }, [movies, currMov]);
 
   return (
     <section className="max-w-screen w-screen block">
       
-      <div id={`${movies[currMov]?.id}-banner`} ref={ref} className="backdrop -z-10 w-full opacity-60 h-screen  absolute top-0 left-0 snap-start" style={{ opacity: intersectionRatio < 0.7 ? 0 : 1, background: "no-repeat center/100% url(" + backdrop + ")" }}>
-
-        </div>
-      <div id={movies[currMov]?.id} className=" banner  h-[77vh] mx-12 relative w-[95%] " style={{opacity: intersectionRatio < 0.7 ? 0:1 , background:"linear-gradient( to bottom,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.6)), no-repeat center/100% url(" + backdrop + ")"}}>
+      <div id={`${movies[currMov]?.id}-banner`} ref={ref} className="backdrop -z-10 w-full opacity-60 h-screen  absolute top-0 left-0 snap-start" style={{ opacity: intersectionRatio < 0.7 ? 0 : 1}}>
+        <img src={backdrop} alt="backdrop" />
+        <div id="backdrop-cover" className={backdropClass} ></div>
+      </div>
+      <div id={movies[currMov]?.id} className=" banner  h-[77vh] mx-12 relative w-[95%] overflow-hidden" style={{opacity: intersectionRatio < 0.7 ? 0:1 }}>
+        <img src={backdrop} alt="banner" />
+        <div id="banner-cover" className={bannerClass} ></div>
 
         <div className="flex flex-row w-24 absolute top-0 mt-4 left-[50%]">
           {[1, 2, 3, 4, 5].map((i) => {
@@ -151,7 +165,7 @@ export const Banner = () => {
             );
           })}
         </div>
-        <div className="container w-full h-full z-50  flex flex-row">
+        <div className="container w-full h-full relative z-50  flex flex-row">
           <div className="w-[70%] pl-8  h-full text-left  text-white">
             <div className="border-l border-gray-400  border-opacity-30 h-full flex flex-col justify-end items-start pb-16">
               <h1 className="text-5xl font-bold uppercase ">

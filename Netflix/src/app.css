@@ -109,6 +109,28 @@ main > div{
   letter-spacing: 0.2rem;
 }
 
+.netflix-loading{
+
+  animation: fade 0.3s infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.netflix-loading path{
+  fill: #fff;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 /* p,h1 ::before{
   content: "";
   position: absolute;
@@ -122,6 +144,120 @@ main > div{
   background-attachment: fixed;
 
 } */
-.banner{
-  
+.backdrop > img{
+  width: 100%;
+  object-fit: cover;
+  position: absolute;
+}
+
+.banner > img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+.banner > #banner-cover{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background: black;
+}
+.backdrop > #backdrop-cover{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /*object-position: top;*/
+  /*z-index: 0;*/
+  top: 0;
+  left: 0;
+  position: absolute;
+  background: black;
+}
+.banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
+  z-index: 1;
+}
+
+
+
+.enter-banner {
+    animation-name: slideIn;
+    animation-direction: normal;
+    animation-timing-function: ease-out;
+    /*animation-delay: 10s;*/
+    animation-duration: 2.5s;
+    animation-fill-mode: forwards;
+    /*animation-iteration-count: infinite;*/
+}
+
+.exit-banner {
+    animation-name: slideOut;
+    animation-direction: normal;
+    animation-timing-function: ease-out;
+    /*animation-delay: 0s;*/
+    animation-duration: 2.5s;
+    animation-fill-mode: forwards;
+  /*transform: translateX(-100%);*/
+    /*animation-iteration-count: infinite;*/
+}
+.enter-backdrop{
+  animation-name: slideInBackdrop;
+  animation-direction: normal;
+  animation-timing-function: ease-out;
+  /*animation-delay: 10s;*/
+  animation-duration: 1.8s;
+  animation-fill-mode: forwards;
+}
+
+.exit-backdrop{
+  animation-name: slideOut;
+  animation-direction: normal;
+  animation-timing-function: ease-out;
+  /*animation-delay: 0s;*/
+  animation-duration: 1.8s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+
+}
+@keyframes slideInBackdrop {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+
 }
