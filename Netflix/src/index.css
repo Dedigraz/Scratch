@@ -4,6 +4,7 @@
 
 *{
   /* outline: red 1px solid; */
+  /* overflow-x: hidden; */
 }
 
 :root {
@@ -42,6 +43,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  /* overflow: ; */
 }
 
 h1 {

@@ -1,3 +1,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root{
+    cursor: url('cursor.svg'), auto;
+}
+
+/* Change cursor to cursor-pointer when hover on clcikable elements */
+button:hover, a:hover{
+    cursor: url('cursor-pointer.svg'), pointer;
+}
+
+
+html {
+    scroll-behavior: smooth
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #bdd4ff
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #888 transparent
+}
+
+::-webkit-scrollbar {
+    width: 5px
+}
+
+::-webkit-scrollbar :hover{
+    cursor: url('cursor-pointer.svg'),pointer;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: "#FBDD4FF";
+    border-radius: 50px
+}

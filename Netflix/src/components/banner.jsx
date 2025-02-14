@@ -15,9 +15,10 @@ export const Banner = () => {
   const [backdrop, setBackdrop] = useState("");
   const [director, setDirector] = useState("");
   const [crew, setCrew] = useState([]);
-  const [timer, setTimer] = useState(0);
+  const [timer, setTimer] = useState(1);
   const [trailer, setTrailer] = useState(<></>);
   const [bannerClass, setBannerClass] = useState("enter-banner");
+  const [propClass, setPropClass] = useState("enter-prop");
   const [backdropClass, setBackdropClass] = useState("enter-backdrop");
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [intersectionRatio, setIntersectionRatio] = useState(1);
@@ -102,10 +103,12 @@ export const Banner = () => {
       setTimer(0); // TODO move to after setTimeout call
       setBannerClass("exit-banner");
       setBackdropClass("exit-backdrop");
-    setTimeout(() => {
-      cycleMovies();
-      setBannerClass("enter-banner");
-      setBackdropClass("enter-backdrop");
+      setPropClass("exit-prop")
+      setTimeout(() => {
+        cycleMovies();
+        setBannerClass("enter-banner");
+        setBackdropClass("enter-backdrop");
+        setPropClass("enter-prop")
     }, 3_000);
     }
     // wait for half a second
@@ -143,9 +146,9 @@ export const Banner = () => {
   }, [movies, currMov]);
 
   return (
-    <section className="max-w-screen w-screen block">
+    <section className="max-w-screen w-full block">
       
-      <div id={`${movies[currMov]?.id}-banner`} ref={ref} className="backdrop -z-10 w-full opacity-60 h-screen  absolute top-0 left-0 snap-start" style={{ opacity: intersectionRatio < 0.7 ? 0 : 1}}>
+      <div id={`${movies[currMov]?.id}-banner`} ref={ref} className="backdrop -z-10 w-full opacity-60 h-screen  absolute top-0 left-0 snap-start overflow-hidden" style={{ opacity: intersectionRatio < 0.7 ? 0 : 1}}>
         <img src={backdrop} alt="backdrop" />
         <div id="backdrop-cover" className={backdropClass} ></div>
       </div>
@@ -206,7 +209,7 @@ export const Banner = () => {
             </div>
           </div>
 
-          <div className="w-[27%] h-full border-l border-r border-gray-400 border-opacity-30 flex flex-col gap-12 justify-end pb-12">
+          <div id="film-prop" className={"w-[27%] h-full border-l border-r border-gray-400 border-opacity-30 flex flex-col gap-12 justify-end pb-12 "+propClass}>
             <div className="flex flex-row justify-between w-full">
               <span className="text-left">
                 <em className="font-semibold">Director</em> <br /> <br />

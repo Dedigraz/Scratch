@@ -39,7 +39,7 @@ export const Categories = () => {
   const ContinueWatching = useMemo(() => {
     let movie = continueWatching.items[0];
     return (
-      <div className="h-[65vh] w-full">
+      <div className="h-[65vh] w-full ">
         <img
           className="object-cover h-full w-full "
           src={
@@ -129,7 +129,7 @@ export const Categories = () => {
       {inCategory ? <Category shows={shows} closeBtn={setInCategory } group={group} />
         :
       <div ref={ref} className="grid grid-cols-3 grid-rows-1 opacity-30 gap-x-56 poster-cont" style={{opacity:Math.max(0.35,intersectionRatio)}}  >
-        <div>
+        <div >
         {ContinueWatching}
           <button className=" w-full bg-transparent mt-16 border-[0.5px] border-gray-500 hover:bg-white hover:text-black text-sm rounded-none uppercase  " onClick={() =>showCategory("ContinueWatching")}>
             See All

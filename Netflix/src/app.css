@@ -110,9 +110,9 @@ main > div{
 }
 
 .netflix-loading{
-
-  animation: fade 0.3s infinite;
+  animation: fade 0.7s infinite;
   animation-timing-function: ease-in-out;
+  -webkit-animation: fade 0.7s infinite;
 }
 
 .netflix-loading path{
@@ -193,7 +193,24 @@ main > div{
   z-index: 1;
 }
 
-
+.exit-prop{
+  animation-name: prop-out;
+  /* animation-iteration-count: infinite; */
+  animation-direction: normal;
+  animation-timing-function: ease-out;
+  /* animation-delay: 1s; */
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+}
+.enter-prop{
+  animation-name: prop-in;
+  /* animation-iteration-count: infinite; */
+  animation-direction: reverse;
+  animation-timing-function: ease-in;
+  /* animation-delay: 1s; */
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+}
 
 .enter-banner {
     animation-name: slideIn;
@@ -236,11 +253,19 @@ main > div{
 @keyframes slideOut {
   0% {
     transform: translateX(100%);
-  }
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+}
 
   100% {
     transform: translateX(0%);
-  }
+    -webkit-transform: translateX(0%);
+    -moz-transform: translateX(0%);
+    -ms-transform: translateX(0%);
+    -o-transform: translateX(0%);
+}
 }
 
 @keyframes slideIn {
@@ -260,4 +285,45 @@ main > div{
         transform: translateX(-100%);
     }
 
+}
+
+@keyframes prop-out {
+  0%{
+    transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    filter: blur(0px);
+    -webkit-filter: blur(0px);
+}
+  100%{
+    transform: translateY(90%);
+    -webkit-transform: translateY(90%);
+    -moz-transform: translateY(90%);
+    -ms-transform: translateY(90%);
+    -o-transform: translateY(90%);
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+}
+}
+@keyframes prop-in {
+  0%{
+    transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -ms-transform: translateY(0%);
+    -o-transform: translateY(0%);
+    filter: blur(0px);
+    -webkit-filter: blur(0px);
+}
+  100%{
+    transform: translateY(90%);
+    -webkit-transform: translateY(90%);
+    -moz-transform: translateY(90%);
+    -ms-transform: translateY(90%);
+    -o-transform: translateY(90%);
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+}
 }
